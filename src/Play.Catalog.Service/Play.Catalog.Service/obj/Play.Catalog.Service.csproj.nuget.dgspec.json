@@ -1,0 +1,82 @@
+{
+  "format": 1,
+  "restore": {
+    "/Users/shivamsingh/Documents/MS/udemyhandson/Play.Catalog/src/Play.Catalog.Service/Play.Catalog.Service/Play.Catalog.Service.csproj": {}
+  },
+  "projects": {
+    "/Users/shivamsingh/Documents/MS/udemyhandson/Play.Catalog/src/Play.Catalog.Service/Play.Catalog.Service/Play.Catalog.Service.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/Users/shivamsingh/Documents/MS/udemyhandson/Play.Catalog/src/Play.Catalog.Service/Play.Catalog.Service/Play.Catalog.Service.csproj",
+        "projectName": "Play.Catalog.Service",
+        "projectPath": "/Users/shivamsingh/Documents/MS/udemyhandson/Play.Catalog/src/Play.Catalog.Service/Play.Catalog.Service/Play.Catalog.Service.csproj",
+        "packagesPath": "/Users/shivamsingh/.nuget/packages/",
+        "outputPath": "/Users/shivamsingh/Documents/MS/udemyhandson/Play.Catalog/src/Play.Catalog.Service/Play.Catalog.Service/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/Users/shivamsingh/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "dependencies": {
+            "Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation": {
+              "target": "Package",
+              "version": "[6.0.12, )"
+            },
+            "Microsoft.CSharp": {
+              "target": "Package",
+              "version": "[4.7.0, )"
+            },
+            "MongoDB.Driver": {
+              "target": "Package",
+              "version": "[2.18.0, )"
+            },
+            "Swashbuckle.AspNetCore": {
+              "target": "Package",
+              "version": "[6.2.3, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.AspNetCore.App": {
+              "privateAssets": "none"
+            },
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/6.0.404/RuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}
