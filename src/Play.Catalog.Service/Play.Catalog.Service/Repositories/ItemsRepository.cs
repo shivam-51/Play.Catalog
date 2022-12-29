@@ -1,10 +1,11 @@
 ﻿using System;
+using Microsoft.Extensions.Options;
 using MongoDB.Driver;
 using Play.Catalog.Service.Entities;
 
 namespace Play.Catalog.Service.Repositories
 {
-    public class ItemsRepository
+    public class ItemsRepository : IItemsRepository
     {
         private const string collectionName = "items";
 
@@ -12,13 +13,26 @@ namespace Play.Catalog.Service.Repositories
 
         private readonly FilterDefinitionBuilder<Item> filterBuilder = Builders<Item>.Filter;
 
-        public ItemsRepository()
-        {
-            var monogoClient = new MongoClient("mongodb://localhost:27017");
-            var database = monogoClient.GetDatabase("Catalog");
+        //public ItemsRepository(IMongoDatabase database)
+        //{
+        //    //var monogoClient = new MongoClient("mongodb://localhost:27017");
+        //    //var database = monogoClient.GetDatabase("Catalog");
 
-            dbCollection = database.GetCollection<Item>(collectionName);
-        } 
+        //    dbCollection = database.GetCollection<Item>(collectionName);
+        //}
+        public ItemsRepository(
+        IOptions<MongoDbSettings> mongoDbSettings)
+        {
+            Console.WriteLine(mongoDbSettings.Value.Host);
+            Console.WriteLine(mongoDbSettings.Value.Port);
+            var mongoClient = new MongoClient(
+                mongoDbSettings.Value.ConnectionString);
+
+            var mongoDatabase = mongoClient.GetDatabase(
+                mongoDbSettings.Value.DatabaseName);
+
+            dbCollection = mongoDatabase.GetCollection<Item>(collectionName);
+        }
 
         public async Task<IReadOnlyCollection<Item>> GetAllAsync()
         {
