@@ -14,4 +14,3 @@ namespace Play.Catalog.Service.Entities
         //public string ConnectionString { get; set; } = null!;
     }
 }
-

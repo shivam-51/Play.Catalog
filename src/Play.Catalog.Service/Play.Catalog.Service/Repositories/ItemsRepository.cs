@@ -1,52 +1,45 @@
 ﻿using System;
+using System.Collections;
 using Microsoft.Extensions.Options;
 using MongoDB.Driver;
 using Play.Catalog.Service.Entities;
 
 namespace Play.Catalog.Service.Repositories
 {
-    public class ItemsRepository : IItemsRepository
+    public class MongoRepository<T> : IRepository<T> where T: IEntity
     {
-        private const string collectionName = "items";
+        private readonly IMongoCollection<T> dbCollection;
 
-        private readonly IMongoCollection<Item> dbCollection;
+        private readonly FilterDefinitionBuilder<T> filterBuilder = Builders<T>.Filter;
 
-        private readonly FilterDefinitionBuilder<Item> filterBuilder = Builders<Item>.Filter;
-
-        //public ItemsRepository(IMongoDatabase database)
-        //{
-        //    //var monogoClient = new MongoClient("mongodb://localhost:27017");
-        //    //var database = monogoClient.GetDatabase("Catalog");
-
-        //    dbCollection = database.GetCollection<Item>(collectionName);
-        //}
-        public ItemsRepository(
-        IOptions<MongoDbSettings> mongoDbSettings)
+        public MongoRepository(
+        IMongoDatabase mongoDatabase, string collectionName)
         {
-            Console.WriteLine(mongoDbSettings.Value.Host);
-            Console.WriteLine(mongoDbSettings.Value.Port);
-            var mongoClient = new MongoClient(
-                mongoDbSettings.Value.ConnectionString);
+            //const string collectionName = "items";
+            //Console.WriteLine(mongoDbSettings.Value.Host);
+            //Console.WriteLine(mongoDbSettings.Value.Port);
+            //var mongoClient = new MongoClient(
+            //    mongoDbSettings.Value.ConnectionString);
 
-            var mongoDatabase = mongoClient.GetDatabase(
-                mongoDbSettings.Value.DatabaseName);
+            //var mongoDatabase = mongoClient.GetDatabase(
+            //    mongoDbSettings.Value.DatabaseName);
 
-            dbCollection = mongoDatabase.GetCollection<Item>(collectionName);
+            dbCollection = mongoDatabase.GetCollection<T>(collectionName);
         }
 
-        public async Task<IReadOnlyCollection<Item>> GetAllAsync()
+        public async Task<IReadOnlyCollection<T>> GetAllAsync()
         {
             return await dbCollection.Find(filterBuilder.Empty).ToListAsync();
         }
 
-        public async Task<Item> GetAsync(Guid id)
+        public async Task<T> GetAsync(Guid id)
         {
-            FilterDefinition<Item> filter = filterBuilder.Eq(entity => entity.Id, id);
+            FilterDefinition<T> filter = filterBuilder.Eq(entity => entity.Id, id);
 
             return await dbCollection.Find(filter).SingleOrDefaultAsync();
         }
 
-        public async Task CreateAsync(Item entity)
+        public async Task CreateAsync(T entity)
         {
             if (entity == null)
             {
@@ -56,20 +49,20 @@ namespace Play.Catalog.Service.Repositories
         }
 
 
-        public async Task UpdateAsync(Item entity)
+        public async Task UpdateAsync(T entity)
         {
             if (entity == null)
             {
                 throw new ArgumentNullException(nameof(entity));
             }
-            FilterDefinition<Item> filter = filterBuilder.Eq(existingEntity => existingEntity.Id, entity.Id);
+            FilterDefinition<T> filter = filterBuilder.Eq(existingEntity => existingEntity.Id, entity.Id);
 
             await dbCollection.ReplaceOneAsync(filter, entity);
         }
 
         public async Task RemoveAsync(Guid id)
         {
-            FilterDefinition<Item> filter = filterBuilder.Eq(existingEntity => existingEntity.Id, id);
+            FilterDefinition<T> filter = filterBuilder.Eq(existingEntity => existingEntity.Id, id);
 
             await dbCollection.DeleteOneAsync(filter);
         }
