@@ -1794,6 +1794,8 @@
         "net6.0"
       ],
       "sources": {
+        "/Users/shivamsingh/Documents/MS/udemyhandson/Play.Same/packages": {},
+        "/Users/shivamsingh/Documents/MS/udemyhandson/Play.Same/packages/Play.Same.1.0.0.nupkg": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
